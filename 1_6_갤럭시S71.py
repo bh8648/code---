@@ -1,44 +1,34 @@
-# 첫 줄에 학생 수 N (1≤N≤10) 이 주어집니다.
-# 두 번째 줄 부터 N줄 동안 이름, 달리기 점수, 팔굽혀펴기 점수, 윗몸일으키기 점수가 주어집니다.
-# 이름 길이는 10글자 보다 작습니다. 
+"""
+갤럭시S 71 이 출시한다. 매일 갤럭시S 71 N개를 상자에 포장하여 판매점으로 보내는 일을 하고있다. 우리에겐 크기가 다른 상자 K개가 있으며, 최대한 적은 수의 상자를 사용하고 싶다. 
+포장한 후 상자에 여유 공간이 많아도 상관없다.
+갤럭시S 71의 상자는 가로1, 세로1, 높이1 이며 상자의 높이는 모두 1이고, 가로세로의 크기는 다양하다.
+N과 상자 정보들이 주어졌을 때 몇 개의 상자가 필요한지 출력하자.
+"""
 
-"""
-5
-Messi 50 70 40
-Mbappe 70 40 60
-Modric 80 50 60
-Neymar 100 60 50
-Ronaldo 100 70 50
-"""
+# 첫 줄에 필요한 갤럭시S 71의 수 N(1≤N≤10000)과, 상자의 수 K(1≤K≤10000)가 주어진다.
+# 다음 K 개의 줄에 상자의 가로, 세로(1≤가로,세로≤1000) 크기가 주어진다. 모든 상자를 사용하였을 때 N개 이상을 포장할 수있도록 주어진다.
+
+# 최소 필요한 상자수를 출력한다.
 
 """
 파이썬은 input이 너무 느림
 코테에서는 input도 sys에서 설정을 해줘야 함.
 """
+
 import sys
 sys.setrecursionlimit(10000)
 input = sys.stdin.readline
 
-students = []
-N = int(input())
-for _ in range(N):
-    name, score1, score2, score3 = input().split()
-    score1 = int(score1)
-    score2 = int(score2)
-    score3 = int(score3)
-    students.append([name, int(score1), int(score2), int(score3)])
+boxes = []
+N, K = map(int, input().split())
+for x in range(K):
+    garo, sero = map(int, input().split())
+    boxes.append(garo*sero)
 
-# 2차원 배열에서 어떤 컬럼의 값을 써서 정렬할지 정하는 옵션 sort(key=)를 사용
-students.sort(key= lambda v : (v[1], v[1]+v[2]+v[3]), reverse=True)
-for v in students:
-    print(v[0])
-print()
+boxes.sort(reverse=True)
+for i in range(K):
+    N -= boxes[i]
+    if N <= 0 :
+        print(i+1)
+        break
 
-students.sort(key= lambda v : (v[2], v[1]+v[2]+v[3]), reverse=True)
-for v in students:
-    print(v[0])
-print()
-
-students.sort(key= lambda v : (v[3], v[1]+v[2]+v[3]), reverse=True)
-for v in students:
-    print(v[0])
