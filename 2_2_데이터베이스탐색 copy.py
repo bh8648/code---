@@ -10,29 +10,25 @@ input = sys.stdin.readline
 # -1은 어떤 데이터가 존재하더라도 무관함
 
 N, M = map(int, input().split())
-
 rows = []
 for _ in range(N):
     rows.append(list(map(int, input().split()))) # A
-search_datas=[]
 Q = int(input())
-for _ in range(Q):
-    search_datas.append(list(map(int, input().split())))
 
-for search_data in search_datas:
-    ids = dict()
-    for i, v in enumerate(search_data):
-        if v != -1:
-            ids[i] = v
-    # -1이 아닌 값들의 인덱스와 해당 값을 저장
-    # row의 인덱스와 값을 비교
+def ismatch(a,b):
+    for i in range(M):
+        if b[i] == -1:
+            continue
+        if b[i] != a[i]:
+            return False
+    return True
+
+for _ in range(Q):
+    s = list(map(int, input().split()))
     count = 0
     for row in rows:
-        check = True
-        for k in ids:
-            if row[k] != ids[k]:
-                check = False
-        if check:
+        if ismatch(row, s):
             count += 1
     print(count)
+
 
